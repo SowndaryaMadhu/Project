@@ -1,0 +1,6 @@
+com\example\demo\PostMicroServiceApplication.class
+com\example\demo\Model\Post.class
+com\example\demo\Repository\PostRepository.class
+com\example\demo\Service\PostServiceImpl.class
+com\example\demo\Controller\PostController.class
+com\example\demo\Service\PostService.class
