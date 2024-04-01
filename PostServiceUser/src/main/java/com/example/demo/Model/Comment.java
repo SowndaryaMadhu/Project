@@ -38,6 +38,10 @@ public class Comment {
 
 	
 
+	
+
+
+
 	public int getId() {
 		return id;
 	}
@@ -83,7 +87,6 @@ public class Comment {
 	public void setPost(Post post) {
 		this.post = post;
 	}
-	
 
 
 

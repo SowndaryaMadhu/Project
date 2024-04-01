@@ -39,6 +39,7 @@ public class Post {
     private Integer shares;
     private Integer likes;
     @org.hibernate.annotations.Index(name = "post_date_index")
+   
     private LocalDateTime date;
 
     @Lob

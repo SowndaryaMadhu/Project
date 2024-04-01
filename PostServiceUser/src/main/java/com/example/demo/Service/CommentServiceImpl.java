@@ -29,20 +29,41 @@ public class CommentServiceImpl implements CommentService {
     public void saveComments(List<Comment> comments) {
         commentRepository.saveAll(comments);
     }
-//    @Override
-//    public Comment createComment(Comment comment, String email, LocalDateTime date) {
-//        // Set the email for the user associated with the comment
-//        User user = comment.getUser();
-//        if (user != null) {
-//            user.setEmail(email);
-//        }
-//
-//        // Set the date for the comment
-//        comment.setDate(date);
-//
-//        // Save the comment
-//        return commentRepository.save(comment);
-//    }
+    @Override
+    public Comment createComment(Comment comment, String email, LocalDateTime postDate) {
+        // Set the email for the user associated with the comment
+        User user = comment.getUser();
+        if (user != null) {
+            user.setEmail(email);
+        }
+
+        // Set the post date for the comment
+        Post post = comment.getPost();
+        if (post != null) {
+            post.setDate(postDate);
+        }
+
+        // Save the comment
+        return commentRepository.save(comment);
+    }
+    @Override
+    public boolean deleteCommentByEmailAndDate(String email, LocalDateTime date) {
+        // Retrieve comments based on email and date
+        List<Comment> commentsToDelete = commentRepository.findByUserEmailAndPostDate(email, date);
+
+        if (commentsToDelete.isEmpty()) {
+            // No comments found for the provided email and date
+            return false;
+        } else {
+            // Delete each comment found
+            for (Comment comment : commentsToDelete) {
+                commentRepository.delete(comment);
+            }
+            return true;
+        }
+    }
+    
+
 
 
     @Override
@@ -114,6 +135,7 @@ public class CommentServiceImpl implements CommentService {
 	        }
 	        return false;
 	    }
+	
 
 
 	  

@@ -18,7 +18,8 @@ public interface CommentService {
     boolean deleteCommentByCommentIdAndPostIdAndEmail(int commentId, int postId, String email);
 	
     
-    //Comment createComment(Comment comment, String email, LocalDateTime date);
+    Comment createComment(Comment comment, String email, LocalDateTime date);
+    boolean deleteCommentByEmailAndDate(String email, LocalDateTime date);
 	
 }
 

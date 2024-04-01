@@ -25,28 +25,51 @@ public class CommentController {
 
     @Autowired
     private CommentService commentService;
-//    
-//    @PostMapping("/comments/{email}/{date}")
-//    public ResponseEntity<Comment> createComment(
-//            @RequestBody Comment comment,
-//            @PathVariable String email,
-//            @PathVariable String date) {
-//
-//        try {
-//            // Parse the date string to LocalDateTime
-//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS");
-//            LocalDateTime localDateTime = LocalDateTime.parse(date, formatter);
-//
-//            Comment createdComment = commentService.createComment(comment, email, localDateTime);
-//            if (createdComment != null) {
-//                return new ResponseEntity<>(createdComment, HttpStatus.CREATED);
-//            } else {
-//                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//            }
-//        } catch (DateTimeParseException e) {
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
-//    }
+    
+    @PostMapping("/comments/{email}/{date}")
+    public ResponseEntity<Comment> createComment(
+            @RequestBody Comment comment,
+            @PathVariable String email,
+            @PathVariable String date) {
+
+        try {
+            // Parse the date string to LocalDateTime
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS");
+            LocalDateTime localDateTime = LocalDateTime.parse(date, formatter);
+
+            Comment createdComment = commentService.createComment(comment, email, localDateTime);
+            if (createdComment != null) {
+                return new ResponseEntity<>(createdComment, HttpStatus.CREATED);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (DateTimeParseException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    @DeleteMapping("/comments/{email}/{date}")
+    public ResponseEntity<String> deleteCommentByEmailAndDate(
+            @PathVariable String email,
+            @PathVariable String date) {
+
+        try {
+            // Parse the date string to LocalDateTime
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS");
+            LocalDateTime localDateTime = LocalDateTime.parse(date, formatter);
+
+            boolean deleted = commentService.deleteCommentByEmailAndDate(email, localDateTime);
+
+            if (deleted) {
+                return new ResponseEntity<>("Comment deleted successfully", HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("Comment not found or unauthorized", HttpStatus.NOT_FOUND);
+            }
+        } catch (DateTimeParseException e) {
+            return new ResponseEntity<>("Invalid date format", HttpStatus.BAD_REQUEST);
+        }
+    }
+
 
 
     
